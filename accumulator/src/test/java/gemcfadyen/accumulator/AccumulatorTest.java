@@ -26,7 +26,7 @@ public class AccumulatorTest {
 	@Parameters
 	public static List<Object[]> testDataInitialisation() {
 		return Arrays.asList(new Object[][] { { "", 0 }, { "1", 1 },
-				{ "3", 3 }, { "10", 10 } });
+				{ "3", 3 }, { "10", 10 }, { "1,2", 3 } });
 	}
 
 	@Test
