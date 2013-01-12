@@ -67,4 +67,26 @@ public class AccumulatorWithErrorneousInputTest {
 		}
 		assertThat(actualErrorMessage, is(expectedErrorMessage));
 	}
+	
+	public void shouldThrowExceptionWhenSeveralNegativeValuesAreInputUsingMulipleDelimitersOfSingleleLength() throws InvalidValueException {
+		String expectedErrorMessage = "negatives not allowed [-9] [-3] ";
+		String actualErrorMessage = "";
+		try {
+			accumulator.add("//%|^\n1%-9^-3");
+		} catch (InvalidValueException exception) {
+			actualErrorMessage = exception.getMessage();
+		}
+		assertThat(actualErrorMessage, is(expectedErrorMessage));
+	}
+	
+	public void shouldThrowExceptionWhenSeveralNegativeValuesAreInputUsingMulipleDelimitersOfMultipleLength() throws InvalidValueException {
+		String expectedErrorMessage = "negatives not allowed [-9] [-3] ";
+		String actualErrorMessage = "";
+		try {
+			accumulator.add("//%%|^\n1%%-9^-3");
+		} catch (InvalidValueException exception) {
+			actualErrorMessage = exception.getMessage();
+		}
+		assertThat(actualErrorMessage, is(expectedErrorMessage));
+	}
 }
