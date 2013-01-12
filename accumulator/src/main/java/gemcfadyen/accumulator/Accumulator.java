@@ -9,6 +9,7 @@ public class Accumulator {
 	private static final String COMMA_DELIMITER = ",";
 	private static final String NEWLINE_DELIMITER = "\n";
 	private String delimiter;
+	private StringBuffer invalidInputErrorMessage;
 
 	public int add(String numbers) throws InvalidValueException {
 		if (isBlank(numbers)) {
@@ -21,8 +22,7 @@ public class Accumulator {
 		if (isValid(standardisedInput)) {
 			return sum(getNumbersFrom(standardisedInput));
 		} else {
-			throw new InvalidValueException("The input " + standardisedInput
-					+ " is not valid");
+			throw new InvalidValueException(invalidInputErrorMessage.toString());
 		}
 
 	}
@@ -58,12 +58,29 @@ public class Accumulator {
 				+ CUSTOM_DELIMITER_INDICATOR.length();
 	}
 
-	private boolean isValid(String input) {
-		if (input.equals(delimiter) || input.contains(delimiter + delimiter)) {
-			return false;
-		} else {
-			return true;
+	private void addInvalidInputErrorFor(String input) {
+		if(invalidInputErrorMessage == null){
+			invalidInputErrorMessage = new StringBuffer("Invalid entries not allowed");
 		}
+		invalidInputErrorMessage.append("[" + input + "] ");
+	}
+
+	private boolean isValid(String input) {
+		boolean isValid = true;
+
+		if (!isNumberBetweenEachDelimiterIn(input) || isNegative(input)) {
+			isValid = false;
+		}
+
+		return isValid;
+	}
+
+	private boolean isNumberBetweenEachDelimiterIn(String input) {
+		if (input.equals(delimiter) || input.contains(delimiter + delimiter)) {
+			addInvalidInputErrorFor(input);
+			return false;
+		}
+		return true;
 	}
 
 	private String[] getNumbersFrom(String input) {
@@ -74,12 +91,34 @@ public class Accumulator {
 		return input.replace(NEWLINE_DELIMITER, COMMA_DELIMITER);
 	}
 
-	private int sum(String[] numbers) {
+	private void addNegativeNumberErrorFor(String input) {
+		if(invalidInputErrorMessage == null){
+			invalidInputErrorMessage = new StringBuffer("negatives not allowed ");
+		}
+		invalidInputErrorMessage.append("[" + input + "] ");
+	}
+
+	private int sum(String[] numbers) throws InvalidValueException {
 		int result = 0;
+
 		for (String number : numbers) {
 			result = result + valueOf(number);
 		}
+
 		return result;
+	}
+
+	private boolean isNegative(String input) {
+		boolean isNegative = false;
+		String[] checkForNegatives = input.split(ESCAPE_CHARACTER + delimiter);
+		for (String digit : checkForNegatives) {
+			if (valueOf(digit) < 0) {
+				isNegative = true;
+				addNegativeNumberErrorFor(digit);
+			}
+		}
+		return isNegative;
+
 	}
 
 	private boolean isBlank(String input) {
