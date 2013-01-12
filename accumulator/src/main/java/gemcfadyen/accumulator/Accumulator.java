@@ -1,5 +1,6 @@
 package gemcfadyen.accumulator;
 
+import static java.lang.Character.isLetter;
 import static java.lang.Integer.valueOf;
 
 public class Accumulator {
@@ -39,13 +40,27 @@ public class Accumulator {
 
 	private String determineDelimiterFrom(String input) {
 		if (input.startsWith(CUSTOM_DELIMITER_INDICATOR)) {
-			return getDelimiterDeclaredAtStartOf(input);
+			return escapeThe(delimiterDeclaredAtStartOf(input));
 		} else {
 			return COMMA_DELIMITER;
 		}
 	}
 
-	private String getDelimiterDeclaredAtStartOf(String input) {
+	private String escapeThe(String delimiter) {
+		char[] charactersInDelimiter = delimiter.toCharArray();
+		StringBuffer escapedDelimiter = new StringBuffer();
+
+		for (char characters : charactersInDelimiter) {
+			if (!isLetter(characters)) {
+				escapedDelimiter.append(ESCAPE_CHARACTER);
+			}
+			escapedDelimiter.append(characters);
+		}
+
+		return escapedDelimiter.toString();
+	}
+
+	private String delimiterDeclaredAtStartOf(String input) {
 		return input.substring(indexOfEndOfCustomDelimiterIndicatorIn(input),
 				indexOfFirstNewLineDelmiterIn(input));
 	}
@@ -86,7 +101,7 @@ public class Accumulator {
 	}
 
 	private String[] getNumbersFrom(String input) {
-		return input.split(ESCAPE_CHARACTER + delimiter);
+		return input.split(delimiter);
 	}
 
 	private String replaceNewLineDelimitersWithCommasIn(String input) {
@@ -116,7 +131,7 @@ public class Accumulator {
 
 	private boolean isNegative(String input) {
 		boolean isNegative = false;
-		String[] checkForNegatives = input.split(ESCAPE_CHARACTER + delimiter);
+		String[] checkForNegatives = input.split(delimiter);
 		for (String digit : checkForNegatives) {
 			if (valueOf(digit) < 0) {
 				isNegative = true;
