@@ -7,12 +7,26 @@ public class Accumulator {
 	private static final String COMMA_DELIMITER = ",";
 	private static final String NEWLINE_DELIMITER = "\n";
 
-	public int add(String numbers) {
+	public int add(String numbers) throws InvalidValueException {
 		if (isBlank(numbers)) {
 			return 0;
 		} else {
 			String inputSeperatedByCommas = putCommaInPlaceOfAllNewLineDelimetersIn(numbers);
-			return sum(getNumbersFrom(inputSeperatedByCommas));
+			if (isValid(inputSeperatedByCommas)) {
+				return sum(getNumbersFrom(inputSeperatedByCommas));
+			} else {
+				throw new InvalidValueException("The input "
+						+ inputSeperatedByCommas + " is not valid");
+			}
+		}
+	}
+
+	private boolean isValid(String input) {
+		if(input.equals(COMMA_DELIMITER) || input.contains(COMMA_DELIMITER + COMMA_DELIMITER)){
+			return false;
+		}
+		else{
+			return true;
 		}
 	}
 

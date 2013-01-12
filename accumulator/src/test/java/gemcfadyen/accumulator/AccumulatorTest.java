@@ -30,14 +30,14 @@ public class AccumulatorTest {
 				{ "1,2", 3 }, { "3,4", 7 }, { "10,10", 20 }, 
 				{ "1,2,3", 6 }, { "7,8,9,10", 34 },	{ "1,2,3,4,5,6,7", 28 },
 				{ "1\n2,3", 6 }, { "3\n1\n3", 7 }, { "1,2,3,4\n5", 15 }, {"6\n2,2,1\n6\n1", 18}
-				 });
+			});
 	}
 
 	@Test
-	public void shouldReturnTotalOfNumbersPassedIntoAccumulator() {
+	public void shouldReturnTotalOfNumbersPassedIntoAccumulator() throws InvalidValueException {
 		accumulator = new Accumulator();
 		int result = accumulator.add(input);
 		assertThat(result, is(equalTo(sum)));
 	}
-
+	
 }
