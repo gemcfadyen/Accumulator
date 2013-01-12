@@ -26,5 +26,17 @@ public class AccumulatorTest {
 		int sum=accumulator.add("1");
 		assertThat(sum, is(equalTo(1)));
 	}
+	
+	@Test
+	public void shouldReturn3When3IsPassedToAccumulator(){
+		int sum=accumulator.add("3");
+		assertThat(sum, is(equalTo(3)));
+	}
+	
+	@Test
+	public void shouldReturn10When10IsPassedIn(){
+		int sum = accumulator.add("10");
+		assertThat(sum, is(equalTo(10)));
+	}
 
 }
