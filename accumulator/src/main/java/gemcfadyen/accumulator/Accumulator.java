@@ -4,6 +4,7 @@ import static java.lang.Integer.valueOf;
 
 public class Accumulator {
 
+	private static final int UPPER_THRESHOLD = 1000;
 	private static final String ESCAPE_CHARACTER = "\\";
 	private static final String CUSTOM_DELIMITER_INDICATOR = "//";
 	private static final String COMMA_DELIMITER = ",";
@@ -59,8 +60,9 @@ public class Accumulator {
 	}
 
 	private void addInvalidInputErrorFor(String input) {
-		if(invalidInputErrorMessage == null){
-			invalidInputErrorMessage = new StringBuffer("Invalid entries not allowed");
+		if (invalidInputErrorMessage == null) {
+			invalidInputErrorMessage = new StringBuffer(
+					"Invalid entries not allowed");
 		}
 		invalidInputErrorMessage.append("[" + input + "] ");
 	}
@@ -92,8 +94,9 @@ public class Accumulator {
 	}
 
 	private void addNegativeNumberErrorFor(String input) {
-		if(invalidInputErrorMessage == null){
-			invalidInputErrorMessage = new StringBuffer("negatives not allowed ");
+		if (invalidInputErrorMessage == null) {
+			invalidInputErrorMessage = new StringBuffer(
+					"negatives not allowed ");
 		}
 		invalidInputErrorMessage.append("[" + input + "] ");
 	}
@@ -102,7 +105,10 @@ public class Accumulator {
 		int result = 0;
 
 		for (String number : numbers) {
-			result = result + valueOf(number);
+			int digit = valueOf(number);
+			if (digit < UPPER_THRESHOLD) {
+				result = result + valueOf(digit);
+			}
 		}
 
 		return result;
