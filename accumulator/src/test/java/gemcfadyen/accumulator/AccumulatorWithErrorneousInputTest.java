@@ -12,7 +12,7 @@ public class AccumulatorWithErrorneousInputTest {
 
 	@Before
 	public void setupAccumulator() {
-		accumulator = new Accumulator();
+		accumulator = new StringCalculator();
 	}
 
 	@Test(expected = InvalidValueException.class)

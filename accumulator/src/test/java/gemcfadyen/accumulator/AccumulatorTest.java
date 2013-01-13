@@ -40,7 +40,7 @@ public class AccumulatorTest {
 
 	@Test
 	public void shouldReturnTotalOfNumbersPassedIntoAccumulator() throws InvalidValueException {
-		accumulator = new Accumulator();
+		accumulator = new StringCalculator();
 		int result = accumulator.add(input);
 		assertThat(result, is(equalTo(sum)));
 	}
