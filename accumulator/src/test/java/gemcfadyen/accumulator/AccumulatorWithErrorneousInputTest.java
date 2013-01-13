@@ -56,7 +56,8 @@ public class AccumulatorWithErrorneousInputTest {
 			throws InvalidValueException {
 		accumulator.add("1,2,-3");
 	}
-
+	
+	@Test
 	public void shouldThrowExceptionWhenSeveralNegativeValuesAreInput() throws InvalidValueException {
 		String expectedErrorMessage = "negatives not allowed [-1] [-3] ";
 		String actualErrorMessage = "";
@@ -68,6 +69,7 @@ public class AccumulatorWithErrorneousInputTest {
 		assertThat(actualErrorMessage, is(expectedErrorMessage));
 	}
 	
+	@Test
 	public void shouldThrowExceptionWhenSeveralNegativeValuesAreInputUsingMulipleDelimitersOfSingleleLength() throws InvalidValueException {
 		String expectedErrorMessage = "negatives not allowed [-9] [-3] ";
 		String actualErrorMessage = "";
@@ -79,6 +81,7 @@ public class AccumulatorWithErrorneousInputTest {
 		assertThat(actualErrorMessage, is(expectedErrorMessage));
 	}
 	
+	@Test
 	public void shouldThrowExceptionWhenSeveralNegativeValuesAreInputUsingMulipleDelimitersOfMultipleLength() throws InvalidValueException {
 		String expectedErrorMessage = "negatives not allowed [-9] [-3] ";
 		String actualErrorMessage = "";
@@ -88,5 +91,17 @@ public class AccumulatorWithErrorneousInputTest {
 			actualErrorMessage = exception.getMessage();
 		}
 		assertThat(actualErrorMessage, is(expectedErrorMessage));
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenThereAreNoNumbersBetweenCustomDelimiters() throws InvalidValueException {
+		String expectedErrorMessage = " is not a valid number";
+		String actualErrorMessage = "";
+		try {
+			accumulator.add("//%%|^\n1%%^3");
+		} catch (InvalidValueException exception) {
+			actualErrorMessage = exception.getMessage();
+		}		assertThat(actualErrorMessage, is(expectedErrorMessage));
+
 	}
 }

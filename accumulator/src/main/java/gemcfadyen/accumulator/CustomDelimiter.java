@@ -4,23 +4,21 @@ import static java.lang.Character.isLetter;
 import static java.lang.Character.valueOf;
 
 public class CustomDelimiter implements Delimiter {
-	private static final String ESCAPE_CHARACTER = "\\";
-	private static final char PIPE = '|';
-	private static final String CUSTOM_DELIMITER_INDICATOR = "//";
-	private static final String NEWLINE_DELIMITER = "\n";
 	
 	public String getDelimiterUsedIn(String input) {
 		 return escapeThe(delimitersDeclaredAtStartOf(input));
 	}
 	
+	public String stripDelimiterFromStartOf(String input) {
+		return input.substring(indexOfFirstNewLineDelmiterIn(input) + NEWLINE_DELIMITER.length());
+	}
+	
 	private String delimitersDeclaredAtStartOf(String input) {
-		return input.substring(indexOfEndOfCustomDelimiterIndicatorIn(input),
-				indexOfFirstNewLineDelmiterIn(input));
+		return input.substring(indexOfEndOfCustomDelimiterIndicatorIn(input), indexOfFirstNewLineDelmiterIn(input));
 	}
 	
 	private int indexOfEndOfCustomDelimiterIndicatorIn(String input) {
-		return input.indexOf(CUSTOM_DELIMITER_INDICATOR)
-				+ CUSTOM_DELIMITER_INDICATOR.length();
+		return input.indexOf(CUSTOM_DELIMITER_INDICATOR) + CUSTOM_DELIMITER_INDICATOR.length();
 	}
 	
 	private int indexOfFirstNewLineDelmiterIn(String input) {
@@ -51,9 +49,5 @@ public class CustomDelimiter implements Delimiter {
 			}
 		}
 		return isAllPipes;
-
 	}
-
-
-	
 }
