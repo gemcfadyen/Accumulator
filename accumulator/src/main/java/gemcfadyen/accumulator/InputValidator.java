@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class InputValidator implements Validator {
+	private static final String IS_NOT_A_VALID_NUMBER = " is not a valid number";
+	private static final String INVALID_ENTRIES_NOT_ALLOWED = "Invalid entries not allowed ";
+	private static final String NEGATIVES_NOT_ALLOWED = "negatives not allowed ";
 	private String input;
 	private String delimiterExpression;
 	private StringBuffer invalidInputErrorMessage;
@@ -26,8 +29,7 @@ public class InputValidator implements Validator {
 	}
 
 	public boolean validate() throws InvalidValueException {
-		if (isJustDelimitersIn(input) || !isNumberBetweenEachDelimiterIn(input)
-				|| isNegative(input)) {
+		if (isJustDelimitersIn(input) || !isNumberBetweenEachDelimiterIn(input) || isNegative(input)) {
 			return false;
 		}
 		return true;
@@ -96,7 +98,7 @@ public class InputValidator implements Validator {
 					addNegativeNumberErrorFor(digit);
 				}
 			} catch (NumberFormatException e) {
-				throw new InvalidValueException(digit + " is not a valid number");
+				throw new InvalidValueException(digit + IS_NOT_A_VALID_NUMBER);
 			}
 		}
 		return isNegative;
@@ -104,16 +106,14 @@ public class InputValidator implements Validator {
 
 	private void addNegativeNumberErrorFor(String input) {
 		if (invalidInputErrorMessage == null) {
-			invalidInputErrorMessage = new StringBuffer(
-					"negatives not allowed ");
+			invalidInputErrorMessage = new StringBuffer(NEGATIVES_NOT_ALLOWED);
 		}
 		invalidInputErrorMessage.append("[" + input + "] ");
 	}
 
 	private void addInvalidInputErrorFor(String input) {
 		if (invalidInputErrorMessage == null) {
-			invalidInputErrorMessage = new StringBuffer(
-					"Invalid entries not allowed ");
+			invalidInputErrorMessage = new StringBuffer(INVALID_ENTRIES_NOT_ALLOWED);
 		}
 		invalidInputErrorMessage.append("[" + input + "] ");
 	}

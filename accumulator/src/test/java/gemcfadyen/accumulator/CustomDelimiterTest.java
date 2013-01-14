@@ -49,7 +49,7 @@ public class CustomDelimiterTest {
 	}
 
 	@Test
-	public void shouldReturnTotalOfNumbersPassedIntoAccumulator()
+	public void shouldReturnCustomDelimiterExpression()
 			throws InvalidValueException {
 		delimiter = new CustomDelimiter();
 		String calculatedDelimiter = delimiter.getDelimiterUsedIn(input);

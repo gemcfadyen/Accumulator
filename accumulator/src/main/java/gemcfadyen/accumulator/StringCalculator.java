@@ -1,6 +1,5 @@
 package gemcfadyen.accumulator;
 
-import static gemcfadyen.accumulator.Delimiter.CUSTOM_DELIMITER_INDICATOR;
 import static java.lang.Integer.valueOf;
 
 public class StringCalculator implements Accumulator {
@@ -30,12 +29,8 @@ public class StringCalculator implements Accumulator {
 	}
 
 	private String determineDelimiterExpressionFrom(String input) {
-		if (input.startsWith(CUSTOM_DELIMITER_INDICATOR)) {
-			delimiter = new CustomDelimiter();
-		} else {
-			delimiter = new BasicDelimiter();
-		}
-
+		DelimiterFactory delimiterFactory = new DelimiterFactory();
+		delimiter = delimiterFactory.createDelimiterFrom(input);
 		return delimiter.getDelimiterUsedIn(input);
 	}
 
