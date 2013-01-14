@@ -1,6 +1,8 @@
 package gemcfadyen.accumulator;
 
 import static java.lang.Integer.valueOf;
+import gemcfadyen.accumulator.delimiter.Delimiter;
+import gemcfadyen.accumulator.delimiter.DelimiterFactory;
 
 public class StringCalculator implements Accumulator {
 	private static final int UPPER_THRESHOLD = 1000;

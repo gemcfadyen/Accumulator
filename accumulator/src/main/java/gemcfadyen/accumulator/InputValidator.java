@@ -1,7 +1,7 @@
 package gemcfadyen.accumulator;
 
-import static gemcfadyen.accumulator.Delimiter.ESCAPE_CHARACTER;
-import static gemcfadyen.accumulator.Delimiter.PIPE;
+import static gemcfadyen.accumulator.delimiter.Delimiter.ESCAPE_CHARACTER;
+import static gemcfadyen.accumulator.delimiter.Delimiter.PIPE;
 import static java.lang.Integer.valueOf;
 
 import java.util.ArrayList;
