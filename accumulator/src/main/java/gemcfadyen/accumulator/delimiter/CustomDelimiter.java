@@ -1,14 +1,13 @@
 package gemcfadyen.accumulator.delimiter;
 
 import static java.lang.Character.isLetter;
-import static java.lang.Character.valueOf;
 
 public class CustomDelimiter implements Delimiter {
 	
 	public String getDelimiterUsedIn(String input) {
 		 return escapeThe(delimitersDeclaredAtStartOf(input));
 	}
-	
+	 
 	public String stripDelimiterFromStartOf(String input) {
 		return input.substring(indexOfFirstNewLineDelmiterIn(input) + NEWLINE_DELIMITER.length());
 	}
@@ -28,20 +27,24 @@ public class CustomDelimiter implements Delimiter {
 	private String escapeThe(String delimiters) {
 		char[] charactersInDelimiter = delimiters.toCharArray();
 		StringBuffer escapedDelimiter = new StringBuffer();
-		boolean isOnlyPipes = delimiterContainsOnlyPipes(delimiters);
+		boolean isOnlyPipes = checkIfOnlyPipesAreIn(delimiters);
 
 		for (char character : charactersInDelimiter) {
 			if (isOnlyPipes) {
 				escapedDelimiter.append(ESCAPE_CHARACTER);
-			} else if (!isLetter(character) && character != valueOf(PIPE)) {
+			} else if (isEscapable(character)) {
 				escapedDelimiter.append(ESCAPE_CHARACTER);
 			}
 			escapedDelimiter.append(character);
 		}
 		return escapedDelimiter.toString();
 	}
+
+	private boolean isEscapable(char character) {
+		return !isLetter(character) && character != Character.valueOf(PIPE);
+	}
 	
-	private boolean delimiterContainsOnlyPipes(String delimiters) {
+	private boolean checkIfOnlyPipesAreIn(String delimiters) {
 		boolean isAllPipes = true;
 		for (char delimiter : delimiters.toCharArray()) {
 			if (delimiter != PIPE) {
